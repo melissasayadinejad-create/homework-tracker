@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Homework Tracker</title>
+<style>
+:root{--pink:#ef6fa8;--pink-dark:#d94f91;--pink-soft:#fff0f6;--pink-pale:#fff8fb;--ink:#3f2d38;--muted:#806b77;--line:#f3cada;--white:#fff;--danger:#c03967;--shadow:0 14px 38px rgba(189,73,126,.12)}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:linear-gradient(180deg,#fff7fb 0%,#ffeef5 100%);color:var(--ink);min-height:100vh}.app{max-width:1120px;margin:auto;padding:38px 22px 70px}.top{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:25px}.eyebrow{margin:0 0 6px;color:var(--pink-dark);font-weight:800;font-size:.75rem;letter-spacing:.12em}.top h1{font-size:clamp(2.1rem,5vw,3.5rem);line-height:1;margin:0}.top p:last-child{color:var(--muted);margin:10px 0 0}.btn{border:none;border-radius:13px;padding:12px 17px;font-weight:800;cursor:pointer}.btn-primary{background:var(--pink);color:white;box-shadow:0 8px 18px rgba(239,111,168,.25)}.btn-primary:hover{background:var(--pink-dark)}.btn-secondary{background:white;color:var(--pink-dark);border:1px solid var(--line)}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:24px 0}.stat,.panel{background:rgba(255,255,255,.92);border:1px solid var(--line);box-shadow:var(--shadow);border-radius:22px}.stat{padding:18px}.stat span{display:block;color:var(--muted);font-size:.85rem}.stat strong{font-size:2rem}.panel{padding:24px;margin-top:18px}.panel-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:18px}.panel h2{margin:0;font-size:1.45rem}.form-grid{display:grid;grid-template-columns:2fr 1.2fr 1fr .8fr auto;gap:12px;align-items:end}label{display:flex;flex-direction:column;gap:7px;font-weight:750;font-size:.88rem}input,select{width:100%;border:1px solid var(--line);background:var(--pink-pale);color:var(--ink);padding:12px 13px;border-radius:12px;font:inherit;outline:none}input:focus,select:focus{border-color:var(--pink);box-shadow:0 0 0 3px rgba(239,111,168,.14)}.filters{display:flex;gap:8px}.filters select{background:white}.task-list{display:grid;gap:12px}.task{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:16px;border:1px solid var(--line);border-radius:17px;background:white}.task.overdue{border-color:#e88aaa;background:#fff7fa}.task.completed{opacity:.6}.task.completed .task-title{text-decoration:line-through}.check{width:28px;height:28px;border:2px solid var(--pink);border-radius:9px;background:white;color:white;cursor:pointer;font-weight:900}.check.on{background:var(--pink)}.task-title{font-weight:850;margin-bottom:7px}.meta{display:flex;flex-wrap:wrap;gap:7px;align-items:center;color:var(--muted);font-size:.82rem}.badge{padding:5px 9px;border-radius:999px;background:var(--pink-soft);color:var(--pink-dark);font-weight:750}.due{font-weight:750}.due.overdue-text{color:var(--danger)}.delete{background:transparent;border:none;color:var(--danger);font-weight:800;cursor:pointer}.empty{text-align:center;padding:28px;color:var(--muted)}dialog{border:none;border-radius:22px;padding:0;max-width:650px;width:calc(100% - 32px);box-shadow:0 24px 70px rgba(91,35,62,.28)}dialog::backdrop{background:rgba(75,38,58,.28);backdrop-filter:blur(3px)}.dialog-inner{padding:24px}.dialog-top{display:flex;justify-content:space-between;align-items:center}.dialog-top h2{margin:0}.close{border:none;background:var(--pink-soft);color:var(--pink-dark);border-radius:10px;width:36px;height:36px;font-size:1.3rem;cursor:pointer}.class-list{display:grid;gap:10px;margin:18px 0}.class-row{display:grid;grid-template-columns:1fr auto;gap:9px}.add-class{display:grid;grid-template-columns:1fr auto;gap:9px;margin-top:12px}.dialog-actions{display:flex;justify-content:flex-end;margin-top:20px}.note{font-size:.85rem;color:var(--muted);margin:5px 0 0}@media(max-width:850px){.form-grid{grid-template-columns:1fr 1fr}.form-grid .title-field{grid-column:1/-1}.form-grid .btn-primary{grid-column:1/-1}.stats{grid-template-columns:1fr 1fr}}@media(max-width:600px){.top,.panel-head{align-items:stretch;flex-direction:column}.form-grid{grid-template-columns:1fr}.form-grid .title-field,.form-grid .btn-primary{grid-column:auto}.stats{grid-template-columns:1fr 1fr}.filters{flex-direction:column}.task{grid-template-columns:auto 1fr}.task .delete{grid-column:2;justify-self:start}.app{padding:24px 14px 55px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div><p class="eyebrow">MY SCHOOL DASHBOARD</p><h1>Homework Tracker</h1><p>Your classes, assignments, and due dates — all in one place.</p></div>
+    <button class="btn btn-secondary" id="editClasses">Edit Classes</button>
+  </header>
+
+  <section class="stats">
+    <div class="stat"><span>Open Tasks</span><strong id="openCount">0</strong></div>
+    <div class="stat"><span>Due Today</span><strong id="todayCount">0</strong></div>
+    <div class="stat"><span>Due Soon</span><strong id="soonCount">0</strong></div>
+    <div class="stat"><span>Completed</span><strong id="doneCount">0</strong></div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head"><div><p class="eyebrow">ADD ASSIGNMENT</p><h2>New Task</h2></div></div>
+    <form id="taskForm" class="form-grid">
+      <label class="title-field">Assignment<input id="taskTitle" placeholder="e.g. Microecon Unit 2 FRQ" required></label>
+      <label>Class<select id="taskClass"></select></label>
+      <label>Due Date<input id="taskDue" type="date" required></label>
+      <label>Priority<select id="taskPriority"><option>Low</option><option selected>Medium</option><option>High</option></select></label>
+      <button class="btn btn-primary" type="submit">Add Task</button>
+    </form>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head"><div><p class="eyebrow">WHAT'S NEXT</p><h2>Assignments</h2><p class="note">Tasks are automatically sorted by due date.</p></div><div class="filters"><select id="filterClass"></select><select id="filterStatus"><option value="open">Open</option><option value="all">All</option><option value="completed">Completed</option></select></div></div>
+    <div id="taskList" class="task-list"></div>
+    <div id="empty" class="empty">No assignments yet — add one above.</div>
+  </section>
+</div>
+
+<dialog id="classDialog">
+  <div class="dialog-inner">
+    <div class="dialog-top"><div><p class="eyebrow">CUSTOMIZE</p><h2>Edit Classes</h2></div><button class="close" id="closeDialog">×</button></div>
+    <p class="note">Rename any class, add another class, or remove one you don't need.</p>
+    <div id="classList" class="class-list"></div>
+    <div class="add-class"><input id="newClass" placeholder="New class name"><button class="btn btn-secondary" id="addClass" type="button">Add</button></div>
+    <div class="dialog-actions"><button class="btn btn-primary" id="saveClasses" type="button">Save Changes</button></div>
+  </div>
+</dialog>
+
+<script>
+const DEFAULT_CLASSES=["AP Microeconomics","AP Literature","Linear Algebra","Calculus III","AP Physics C","Art History","Chemistry"];
+function loadArray(key,fallback){try{const v=JSON.parse(localStorage.getItem(key));return Array.isArray(v)&&v.length?v:fallback.slice()}catch{return fallback.slice()}}
+let classes=loadArray("homeworkClasses",DEFAULT_CLASSES);
+let tasks=loadArray("homeworkTasks",[]);
+const $=id=>document.getElementById(id);
+const taskForm=$("taskForm"),taskTitle=$("taskTitle"),taskClass=$("taskClass"),taskDue=$("taskDue"),taskPriority=$("taskPriority"),taskList=$("taskList"),empty=$("empty"),filterClass=$("filterClass"),filterStatus=$("filterStatus"),classDialog=$("classDialog"),classList=$("classList"),newClass=$("newClass");
+function save(){localStorage.setItem("homeworkClasses",JSON.stringify(classes));localStorage.setItem("homeworkTasks",JSON.stringify(tasks))}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function populate(){taskClass.innerHTML=classes.map(c=>`<option>${esc(c)}</option>`).join("");filterClass.innerHTML=`<option value="all">All classes</option>`+classes.map(c=>`<option>${esc(c)}</option>`).join("")}
+function isoToday(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`}
+function daysFromToday(date){const a=new Date(isoToday()+"T00:00:00"),b=new Date(date+"T00:00:00");return Math.round((b-a)/86400000)}
+function niceDate(d){return new Date(d+"T00:00:00").toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"})}
+function render(){let shown=tasks.filter(t=>(filterClass.value==="all"||t.className===filterClass.value)&&(filterStatus.value==="all"||(filterStatus.value==="open"&&!t.completed)||(filterStatus.value==="completed"&&t.completed)));shown.sort((a,b)=>a.completed-b.completed||a.dueDate.localeCompare(b.dueDate));taskList.innerHTML=shown.map(t=>{const diff=daysFromToday(t.dueDate),over=!t.completed&&diff<0;let dueText=diff===0?"Due today":diff===1?"Due tomorrow":diff<0?`Overdue · ${niceDate(t.dueDate)}`:`Due ${niceDate(t.dueDate)}`;return `<article class="task ${t.completed?"completed":""} ${over?"overdue":""}"><button class="check ${t.completed?"on":""}" onclick="toggleTask('${t.id}')">${t.completed?"✓":""}</button><div><div class="task-title">${esc(t.title)}</div><div class="meta"><span class="badge">${esc(t.className)}</span><span class="badge">${esc(t.priority)}</span><span class="due ${over?"overdue-text":""}">${dueText}</span></div></div><button class="delete" onclick="deleteTask('${t.id}')">Delete</button></article>`}).join("");empty.style.display=shown.length?"none":"block";stats()}
+function stats(){const open=tasks.filter(t=>!t.completed);$("openCount").textContent=open.length;$("todayCount").textContent=open.filter(t=>daysFromToday(t.dueDate)===0).length;$("soonCount").textContent=open.filter(t=>{const d=daysFromToday(t.dueDate);return d>=0&&d<=3}).length;$("doneCount").textContent=tasks.filter(t=>t.completed).length}
+taskForm.addEventListener("submit",e=>{e.preventDefault();tasks.push({id:(crypto.randomUUID?crypto.randomUUID():Date.now().toString()),title:taskTitle.value.trim(),className:taskClass.value,dueDate:taskDue.value,priority:taskPriority.value,completed:false});save();taskForm.reset();taskPriority.value="Medium";render()});
+window.toggleTask=id=>{tasks=tasks.map(t=>t.id===id?{...t,completed:!t.completed}:t);save();render()};window.deleteTask=id=>{tasks=tasks.filter(t=>t.id!==id);save();render()};
+filterClass.onchange=render;filterStatus.onchange=render;
+function renderClasses(){classList.innerHTML=classes.map((c,i)=>`<div class="class-row"><input data-i="${i}" value="${esc(c)}"><button class="delete" onclick="removeClass(${i})">Remove</button></div>`).join("")}
+$("editClasses").onclick=()=>{renderClasses();classDialog.showModal()};$("closeDialog").onclick=()=>classDialog.close();window.removeClass=i=>{if(tasks.some(t=>t.className===classes[i])){alert("Delete or complete/move assignments for this class before removing it.");return}classes.splice(i,1);renderClasses()};
+$("addClass").onclick=()=>{const n=newClass.value.trim();if(n&&!classes.includes(n)){classes.push(n);newClass.value="";renderClasses()}};
+$("saveClasses").onclick=()=>{const inputs=[...classList.querySelectorAll("input")];const old=[...classes];const next=inputs.map(x=>x.value.trim()).filter(Boolean);if(!next.length){alert("Keep at least one class.");return}if(new Set(next).size!==next.length){alert("Class names must be unique.");return}inputs.forEach((input,i)=>{const a=old[i],b=input.value.trim();if(a&&b&&a!==b)tasks=tasks.map(t=>t.className===a?{...t,className:b}:t)});classes=next;save();populate();render();classDialog.close()};
+populate();render();
+</script>
+</body>
+</html>
