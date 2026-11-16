@@ -16,7 +16,7 @@ section[hidden]{display:none}
 <div class="app">
   <header class="top">
     <div><p class="eyebrow">MY SCHOOL DASHBOARD</p><h1>Homework Tracker</h1></div>
-    <div class="top-actions"><button class="btn btn-secondary" id="toggleCalendar" type="button" aria-expanded="false" aria-controls="calendarPanel">📅 Calendar</button><button class="btn btn-secondary" id="editClasses">Edit Classes</button></div>
+    <div class="top-actions"><button class="btn btn-secondary" id="downloadBackup" type="button">⬇ Download Backup</button><button class="btn btn-secondary" id="toggleCalendar" type="button" aria-expanded="false" aria-controls="calendarPanel">📅 Calendar</button><button class="btn btn-secondary" id="editClasses">Edit Classes</button></div>
   </header>
 
   <section class="panel calendar-panel" id="calendarPanel" hidden>
@@ -118,6 +118,15 @@ $("calendarToday").addEventListener("click",()=>{selectedCalendarDate=isoToday()
 const taskForm=$("taskForm"),taskTitle=$("taskTitle"),taskClass=$("taskClass"),taskDue=$("taskDue"),taskPriority=$("taskPriority"),taskList=$("taskList"),empty=$("empty"),filterClass=$("filterClass"),filterStatus=$("filterStatus"),classDialog=$("classDialog"),classList=$("classList"),newClass=$("newClass");
 const taskDialog=$("taskDialog"),editTaskForm=$("editTaskForm");let editingTaskId=null;
 function toast(message,error=false){const item=document.createElement("div");item.className="toast"+(error?" error":"");item.textContent=message;$("toastStack").append(item);setTimeout(()=>item.remove(),3500)}
+$("downloadBackup").addEventListener("click",()=>{
+  try{
+    const backup={format:"homework-tracker-backup",version:1,exportedAt:new Date().toISOString(),classes,tasks,notes:personalNotes.value};
+    const blob=new Blob([JSON.stringify(backup,null,2)],{type:"application/json"});
+    const url=URL.createObjectURL(blob),link=document.createElement("a");
+    link.href=url;link.download=`homework-tracker-backup-${isoToday()}.json`;document.body.append(link);link.click();link.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),1000);toast("Backup downloaded — keep it somewhere safe!");
+  }catch{toast("Could not create backup. Please try again.",true)}
+});
 function save(){localStorage.setItem("homeworkClasses",JSON.stringify(classes));localStorage.setItem("homeworkTasks",JSON.stringify(tasks))}
 function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
 function populate(){taskClass.innerHTML=classes.map(c=>`<option>${esc(c)}</option>`).join("");filterClass.innerHTML=`<option value="all">All classes</option>`+classes.map(c=>`<option>${esc(c)}</option>`).join("")}
